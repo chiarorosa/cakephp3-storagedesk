@@ -1,0 +1,9 @@
+{{ _view.assign('title', "page title") }}
+
+{{ _view.start('header') }}
+    <p>page header added</p>
+{{ _view.end() }}
+
+<p>Content</p>
+
+{{ Html.link('Link Example', {'controller':'Pages', 'action': 'home'}, {'class':'custom-class-here'})|raw }}

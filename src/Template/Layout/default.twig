@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {{ Html.charset()|raw }}
+
+    <title>
+        {{ __('myTwigExample') }}
+        {{ _view.fetch('title')|raw }}
+    </title>
+
+    {{ Html.meta('icon')|raw }}
+
+    {{ Html.css('default.app.css')|raw }}
+    {{ Html.script('app')|raw }}
+
+    {{ _view.fetch('meta')|raw }}
+    {{ _view.fetch('css')|raw }}
+    {{ _view.fetch('script')|raw }}
+</head>
+<body>
+    <header>
+        {{ _view.fetch('header')|raw }}
+    </header>
+
+    {{ Flash.render()|raw }}
+
+    <section>
+        {{ _view.fetch('content')|raw }}
+    </section>
+
+    <footer>
+        {{ _view.fetch('footer')|raw }}
+    </footer>
+</body>
+</html>
