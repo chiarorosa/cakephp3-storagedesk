@@ -207,6 +207,7 @@ Type::build('timestamp')
  *
  */
 Plugin::load('WyriHaximus/TwigView', ['bootstrap' => true]);
+Plugin::load('SDesk', ['bootstrap' => false, 'routes' => true]);
 
 /*
  * Only try to load DebugKit in development mode
