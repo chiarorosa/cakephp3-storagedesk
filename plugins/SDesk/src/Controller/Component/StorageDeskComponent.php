@@ -47,7 +47,12 @@ class StorageDeskComponent extends Component
     /**
      * @var string
      */
-    protected $spacename;
+    protected $bucket;
+
+    /**
+     * @var string
+     */
+    protected $endpoint;
 
     /**
      * @var object
@@ -65,13 +70,12 @@ class StorageDeskComponent extends Component
     public $filesystem;
 
     /**
-     * Startup Component Callback.
-     *
-     * https://book.cakephp.org/3.0/en/controllers/components.html#component-callbacks
+     * Setup Component.
+     * Is called manualy when is necessary
      *
      * @return void
      */
-    public function startup()
+    public function setup()
     {
         $S3ClientConfigure = Configure::read('S3Client');
         
@@ -84,20 +88,26 @@ class StorageDeskComponent extends Component
 
         $this->version = $S3ClientConfigure['version'];
 
-        $this->spacename = $S3ClientConfigure['spacename'];
+        $this->bucket = $S3ClientConfigure['bucket'];
+        
+        $this->endpoint = $S3ClientConfigure['endpoint'];
 
         $this->client = new S3Client([
             'credentials' => $this->credentials,
             'region' => $this->region,
             'version' => $this->version,
+            'endpoint' => $S3ClientConfigure['endpoint']
         ]);
 
-        // $this->adapter = new AwsS3Adapter($this->client, $this->spacename);
-        // $this->filesystem = new Filesystem($this->adapter);
+        $this->adapter = new AwsS3Adapter($this->client, $this->bucket);
+        $this->filesystem = new Filesystem($this->adapter);
     }
 
     public function isConnected(string $adapter)
     {
-        dd($adapter);
+        $this->setup();
+        
+        $contents = $this->filesystem->listContents();
+        dd($contents);
     }
 }

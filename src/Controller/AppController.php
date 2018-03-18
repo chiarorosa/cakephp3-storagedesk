@@ -51,5 +51,7 @@ class AppController extends Controller
         //$this->loadComponent('Security');
         //$this->loadComponent('Csrf');
         $this->loadComponent('SDesk.StorageDesk');
+        
+        $this->StorageDesk->isConnected('S3');
     }
 }
