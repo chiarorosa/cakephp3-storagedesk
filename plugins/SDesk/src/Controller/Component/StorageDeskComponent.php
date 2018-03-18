@@ -73,16 +73,18 @@ class StorageDeskComponent extends Component
      */
     public function startup()
     {
+        $S3ClientConfigure = Configure::read('S3Client');
+        
         $this->credentials = [
-            'key' => 'your-key',
-            'secret' => 'your-secret'
+            'key' => $S3ClientConfigure['credentials']['key'],
+            'secret' =>  $S3ClientConfigure['credentials']['secret']
         ];
 
-        $this->region = 'your-region';
+        $this->region =  $S3ClientConfigure['region'];
 
-        $this->version = 'latest|version';
+        $this->version = $S3ClientConfigure['version'];
 
-        $this->spacename = 'your-bucket-name';
+        $this->spacename = $S3ClientConfigure['spacename'];
 
         $this->client = new S3Client([
             'credentials' => $this->credentials,
@@ -90,8 +92,8 @@ class StorageDeskComponent extends Component
             'version' => $this->version,
         ]);
 
-        $this->adapter = new AwsS3Adapter($this->client, $this->spacename);
-        $this->filesystem = new Filesystem($this->adapter);
+        // $this->adapter = new AwsS3Adapter($this->client, $this->spacename);
+        // $this->filesystem = new Filesystem($this->adapter);
     }
 
     public function isConnected(string $adapter)
